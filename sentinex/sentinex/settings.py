@@ -42,6 +42,10 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # Packages ↓
+    "rest_framework",
+    "drf_spectacular",
+    "django_celery_beat",
+    "django_filters",
     # Apps ↓
     "scheduler",
     "sender",
@@ -143,24 +147,29 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Djangorestframework Settings ↓
-# REST_FRAMEWORK = {
-#     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
-#     "PAGE_SIZE": 10,
-#     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
-#     "DEFAULT_RENDERER_CLASSES": [
-#         "rest_framework.renderers.JSONRenderer",
-#     ],
-#     "DEFAULT_PARSER_CLASSES": ("rest_framework.parsers.JSONParser",),
-# }
+REST_FRAMEWORK = {
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
+    "PAGE_SIZE": 10,
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    "DEFAULT_RENDERER_CLASSES": [
+        "rest_framework.renderers.JSONRenderer",
+    ],
+    "DEFAULT_PARSER_CLASSES": ("rest_framework.parsers.JSONParser",),
+}
 
 # Documentation Settings ↓
-# SPECTACULAR_SETTINGS = {
-#     "TITLE": "",
-#     "DESCRIPTION": """""",
-#     "VERSION": "",
-#     "SERVE_INCLUDE_SCHEMA": False,
-#     "CONTACT": {"name": "Leonid Jofe", "telegram": "https://t.me/LEON_JOFE"},
-#     "LICENSE": {"name": "MIT", "url": "https://opensource.org/licenses/MIT"},
-#     "PARSER_WHITELIST": ["rest_framework.parsers.JSONParser"],
-#     "RENDERER_WHITELIST": ["rest_framework.renderers.JSONRenderer"],
-# }
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Sentinex",
+    "DESCRIPTION": """Easy Self-Hosted Service for Monitoring the availability of Sites, API and Services.""",
+    "VERSION": "0.0.1",
+    "SERVE_INCLUDE_SCHEMA": False,
+    "CONTACT": {"name": "Leonid Jofe", "telegram": "https://t.me/LEON_JOFE"},
+    "LICENSE": {"name": "MIT", "url": "https://opensource.org/licenses/MIT"},
+    "PARSER_WHITELIST": ["rest_framework.parsers.JSONParser"],
+    "RENDERER_WHITELIST": ["rest_framework.renderers.JSONRenderer"],
+}
+
+# Celery Configuration Options
+CELERY_TIMEZONE = "UTC"
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 30 * 60
