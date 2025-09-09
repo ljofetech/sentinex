@@ -30,11 +30,11 @@ urlpatterns = [
         admin.site.urls,
         name="admin",
     ),
-    # path(
-    #     "api-scheduler/",
-    #     include("scheduler.urls"),
-    #     name="scheduler",
-    # ),
+    path(
+        "api-scheduler/",
+        include("scheduler.urls"),
+        name="scheduler",
+    ),
     # path(
     #     "api-sender/",
     #     include("sender.urls"),
