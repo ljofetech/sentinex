@@ -1,3 +1,6 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import Endpoint, CheckLog
+
+admin.site.register(Endpoint)
+admin.site.register(CheckLog)

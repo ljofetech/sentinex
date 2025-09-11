@@ -35,11 +35,11 @@ urlpatterns = [
         include("scheduler.urls"),
         name="scheduler",
     ),
-    # path(
-    #     "api-sender/",
-    #     include("sender.urls"),
-    #     name="sender",
-    # ),
+    path(
+        "api-sender/",
+        include("sender.urls"),
+        name="sender",
+    ),
     path(
         "api/schema/",
         SpectacularAPIView.as_view(),

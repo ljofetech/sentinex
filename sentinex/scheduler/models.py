@@ -9,6 +9,12 @@ class Endpoint(models.Model):
     is_active = models.BooleanField(default=True)
     notify_on_failure = models.BooleanField(default=True)
 
+    def __str__(self):
+        return f"""
+            Name: {self.name},
+            URL: {self.url}
+        """
+
 
 class CheckLog(models.Model):
     endpoint = models.ForeignKey(Endpoint, on_delete=models.CASCADE)
@@ -16,3 +22,9 @@ class CheckLog(models.Model):
     response_time = models.FloatField()
     is_up = models.BooleanField()
     checked_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"""
+            Endpoint: {self.endpoint},
+            Status_code: {self.status_code}
+        """
