@@ -1,3 +1,5 @@
+import json
+
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
@@ -9,17 +11,19 @@ from .models import Endpoint, CheckLog
 @receiver(post_save, sender=Endpoint)
 def create_endpoint(sender, instance, created, **kwargs):
     if created:
-        print("ENDPOINT IS CREATED - SIGNAL!")
-
-        interval, _ = IntervalSchedule.objects.get_or_create(
-            every=30,
+        schedule, _ = IntervalSchedule.objects.get_or_create(
+            every=instance.check_interval,
             period=IntervalSchedule.SECONDS,
         )
-
         PeriodicTask.objects.create(
-            interval=interval,
-            name="endpoint-schedule",
+            interval=schedule,
+            name=f"Monitor: {instance.url}",
             task="scheduler.tasks.endpoint_checker",
+            kwargs=json.dumps(
+                {
+                    "endpoint_id": instance.id,
+                }
+            ),
         )
 
 

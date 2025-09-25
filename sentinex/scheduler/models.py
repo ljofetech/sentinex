@@ -4,7 +4,7 @@ from django.db import models
 class Endpoint(models.Model):
     name = models.CharField(max_length=100)
     url = models.URLField()
-    check_interval = models.IntegerField(default=5)  # в минутах
+    check_interval = models.IntegerField(default=5)
     last_checked = models.DateTimeField(null=True, blank=True)
     is_active = models.BooleanField(default=True)
     notify_on_failure = models.BooleanField(default=True)

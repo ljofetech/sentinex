@@ -4,7 +4,7 @@ services:
     build:
       - ./sentinex
     container_name:
-      - sentinex
+      - django_sentinex_service
     volumes:
       - ./sentinex:/app
     ports:
@@ -19,18 +19,7 @@ services:
       - sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     depends_on:
       - pgdb
-      - redis
     restart: always
-  celery:
-    build:
-      - ./sentinex
-    command:
-      - celery -A sentinex worker -l INFO
-    volumes:
-      - ./sentinex:/app
-    depends_on:
-      - django
-      - redis
   pgdb:
     image: postgres:15
     container_name:
@@ -45,11 +34,18 @@ services:
       - django_network
     restart:
       - always
-  redis:
-    image: "redis:alpine"
-    
+  celery:
+    build:
+      - ./sentinex
+    command:
+      - celery -A sentinex worker -l INFO
+    volumes:
+      - ./sentinex:/app
+    depends_on:
+      - django
+
 volumes:
-  pgdata:
+  postgres_data:
 
 networks:
   django_network:
