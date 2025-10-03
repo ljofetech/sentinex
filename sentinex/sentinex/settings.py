@@ -129,7 +129,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "Europe/Nicosia"
 
 USE_I18N = True
 
@@ -172,4 +172,4 @@ SPECTACULAR_SETTINGS = {
 # Celery Configuration Options
 CELERY_BROKER_URL = os.getenv("CELERY_BROKER")
 CELERY_RESULT_BACKEND = os.getenv("CELERY_BROKER")
-CELERY_TIMEZONE = "UTC"
+CELERY_TIMEZONE = "Europe/Nicosia"

@@ -2,10 +2,11 @@ import json
 
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.utils import timezone
 
 from django_celery_beat.models import PeriodicTask, IntervalSchedule
 
-from .models import Endpoint, CheckLog
+from .models import Endpoint
 
 
 @receiver(post_save, sender=Endpoint)
@@ -17,17 +18,13 @@ def create_endpoint(sender, instance, created, **kwargs):
         )
         PeriodicTask.objects.create(
             interval=schedule,
-            name=f"Monitor: {instance.url}",
+            name=f"Monitor: {instance.url} ({instance.id})",
             task="scheduler.tasks.endpoint_checker",
+            enabled=True,
+            start_time=timezone.now(),
             kwargs=json.dumps(
                 {
                     "endpoint_id": instance.id,
                 }
             ),
         )
-
-
-@receiver(post_save, sender=CheckLog)
-def create_checklog(sender, instance, created, **kwargs):
-    if created:
-        print("CHECKLOG IS CREATED - SIGNAL!")

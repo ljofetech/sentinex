@@ -1,4 +1,5 @@
-# celery -A sentinex worker --loglevel=info
+# py manage.py runserver
+# celery -A sentinex worker -l INFO --pool=solo
 # celery -A sentinex beat -l INFO --scheduler django_celery_beat.schedulers:DatabaseScheduler --max-interval 60
 
 import os
